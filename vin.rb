@@ -184,8 +184,7 @@ class Vin
   # Ordonne les vins selon le numero.
   #
   def <=>( autre )
-    # A MODIFIER/COMPLETER.
-    nil
+    @numero <=> autre.numero
   end
 
 end
