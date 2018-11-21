@@ -42,6 +42,41 @@ class Vin
 
   # Methodes pour acces (lecture) aux attributs (readers) d'une instance.
   # A COMPLETER.
+  def numero
+    @numero
+  end
+
+  def date_achat
+    @date_achat
+  end
+
+  def type
+    @type
+  end
+
+  def appellation
+    @appellation
+  end
+
+  def millesime
+    @millesime
+  end
+
+  def prix
+    @prix
+  end
+
+  def nom
+    @nom
+  end
+
+  def note
+    @note
+  end
+
+  def commentaire
+    @commentaire
+  end
 
 
   # Methode de classe utilisee pour la construction, en cours
@@ -77,6 +112,15 @@ class Vin
     DBC.require( prix.kind_of?(Float) && prix >= 0.00,
                  "Prix de vin incorrect -- doit etre un Float non-negatif: #{prix}!?" )
     # A COMPLETER.
+    @numero = numero
+    @date_achat = date_achat
+    @type = type
+    @appellation = appellation
+    @millesime = millesime
+    @prix = prix
+    @nom = nom
+    @note = note
+    @commentaire = commentaire
     Vin.numero_max = Vin.numero_max ? [Vin.numero_max, numero].max : numero
   end
 
