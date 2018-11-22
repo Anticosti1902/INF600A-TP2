@@ -331,6 +331,10 @@ end
 # - argument(s) en trop
 #=================================
 def supprimer( les_vins )
+  num_vin = ARGV.shift
+  verifier_arguments_en_trop( ARGV )
+  les_vins = les_vins.reject {|x| x.numero == num_vin.to_i}
+  return les_vins
 end
 
 #=================================
