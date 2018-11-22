@@ -195,7 +195,31 @@ FORMAT_COURT = '%I [%.2P$]: %A %M, %N'
 FORMAT_LONG  = '%I [%T - %.2P$]: %A %M, %N (%D) => %n {%c}'
 
 def lister( les_vins )
-  nil # A MODIFIER/COMPLETER!
+#  puts les_vins[0]
+  #if ARGV.length == 0
+  #  if @note != nil
+    #  format( "%i [%s - %.2f$]: %s %i, %s (%s) => %i {%s}", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @note , @commentaire || '')
+  #  else
+  #    format( "%i [%s - %.2f$]: %s %i, %s (%s) => {%s}", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @commentaire || '')
+  #  end
+  #end
+  #arg =  ARGV.shift
+  #verifier_arguments_en_trop( ARGV )
+  #if arg == "--court"
+  #  if @note != nil
+  #    format( "%i [%.2f$]: %s %i, %s", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @note , @commentaire || '')
+  #  else
+  #    format( "%i [%.2f$]: %s %i, %s", @numero , @prix, @appellation, @millesime)
+  #  end
+  #else arg == "--long"
+  #  if @note != nil
+  #    format( "%i [%s - %.2f$]: %s %i, %s (%s) => %i {%s}", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @note , @commentaire || '')
+  #  else
+  #    format( "%i [%s - %.2f$]: %s %i, %s (%s) => {%s}", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @commentaire || '')
+  #  end
+  #end
+
+
 end
 
 #=================================
@@ -256,7 +280,6 @@ def ajouter( les_vins )
     #puts Motifs::MILLESIME.match(millesime)
     #puts !Motifs::MILLESIME.match?(millesime)
     if !Motifs::MILLESIME.match?(millesime)
-      puts "ALLO!"
       $stderr.puts "Le millesime entree de correspond pas a un nombre entier positif"
     end
     nom = ARGV.shift
@@ -278,7 +301,21 @@ end
 #  - argument(s) en trop
 #=================================
 def selectionner( les_vins )
-  nil # A MODIFIER/COMPLETER!
+    if ARGV.length == 0
+      return les_vins
+    end
+    arg = ARGV.shift
+    if arg == "--non-bus"
+      les_vins = les_vins.reject {|x| x.bu?}
+      return les_vins
+    end
+    if arg == "--bus"
+      les_vins = les_vins.reject {|x| !x.bu?}
+      return les_vins
+    end
+    if arg == "--tous"
+      return les_vins
+    end
 end
 
 #=================================
@@ -294,7 +331,6 @@ end
 # - argument(s) en trop
 #=================================
 def supprimer( les_vins )
-  nil # A MODIFIER/COMPLETER!
 end
 
 #=================================
