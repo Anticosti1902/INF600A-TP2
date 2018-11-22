@@ -351,7 +351,16 @@ end
 # - argument(s) en trop
 #=================================
 def noter( les_vins )
-  nil # A MODIFIER/COMPLETER!
+  num_vin = ARGV.shift
+  note = ARGV.shift
+  commentaire = ARGV.shift
+  verifier_arguments_en_trop( ARGV )
+  for x in les_vins
+    if(x.numero == num_vin.to_i)
+      x.noter(note, commentaire)
+    end
+  end
+  return les_vins
 end
 
 #=================================
@@ -377,7 +386,24 @@ end
 #   c => commentaire
 #=================================
 def trier( les_vins )
-  nil # A MODIFIER/COMPLETER!
+  if ARGV.length == 0
+    les_vins = les_vins.sort_by {|x| x.numero}
+    return les_vins
+  end
+
+  arg = ARGV.shift
+  arg = arg.partition('--').last
+  if(arg == 'reverse')
+    les_vins = les_vins.reverse
+  else
+    les_vins = les_vins.sort_by {|x| x.send(arg)}
+    if(ARGV.length == 1)
+      ARGV.shift
+      verifier_arguments_en_trop( ARGV )
+      les_vins = les_vins.reverse
+    end
+  end
+  return les_vins
 end
 
 
