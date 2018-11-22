@@ -78,14 +78,12 @@ COMMANDES
   trier         - Trie selon divers criteres
 EOF
 end
-
 ###################################################
 # Methodes pour manipulation du depot.
 #
 # Fournies pour simplifier le devoir et assurer au depart un
 # fonctionnement minimal correct du logiciel.
 ###################################################
-
 # Extension de String pour determiner si le depot represente stdin.
 #
 class String
@@ -93,7 +91,6 @@ class String
     self == "-"
   end
 end
-
 # Identifie le depot a utiliser, en analysant l'option specifiee sur
 # la ligne de commande, si presente.
 #
@@ -219,7 +216,54 @@ end
 # - argument(s) en trop
 #=================================
 def ajouter( les_vins )
-  nil # A MODIFIER/COMPLETER!
+  #Valeurs par défaut
+    type = 'rouge'
+    qte = 1
+    appellation = ''
+    arg1 = ARGV.shift
+    if arg1.partition('=').first == "--qte"
+      qte = arg1.partition('=').last
+    elsif arg1.partition('=').first == "--type"
+      type = arg1.partition('=').last
+    else
+      appellation = arg1
+    end
+
+    if appellation == ''
+      arg2 = ARGV.shift
+      if arg2.partition('=').first == "--qte"
+        qte = arg2.partition('=').last
+      elsif arg2.partition('=').first == "--type"
+        type = arg2.partition('=').last
+      else
+        appellation = arg2
+      end
+    end
+
+    last_line = File.open(depot_a_utiliser).to_a.last
+    if !last_line.nil?
+      numero = Motifs::NUM_VIN.match(last_line)[0].to_i
+    else
+      numero = -1
+    end
+    date = Time.now.strftime("%y/%m/%d")
+    date = Date.parse date
+    if appellation == ''
+      appellation = ARGV.shift
+    end
+    millesime = ARGV.shift
+    #puts millesime
+    #puts Motifs::MILLESIME.match(millesime)
+    #puts !Motifs::MILLESIME.match?(millesime)
+    if !Motifs::MILLESIME.match?(millesime)
+      puts "ALLO!"
+      $stderr.puts "Le millesime entree de correspond pas a un nombre entier positif"
+    end
+    nom = ARGV.shift
+    prix = ARGV.shift
+    verifier_arguments_en_trop( ARGV )
+    1.step(qte.to_i,1) { |i| les_vins << Vin.new( numero + i, date, type.to_sym, appellation, millesime.to_i, nom, prix.to_f) }
+    return les_vins
 end
 
 #=================================

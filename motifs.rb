@@ -29,6 +29,7 @@ module Motifs
   APPELLATION = CHAINE
   NOM = CHAINE
   COMMENTAIRE = CHAINE
+  #TROUVER_FORMATS =  %r{%[^IDTAMNPnc]*[IDTAMNPnc]{1}}
 
   MILLESIME = %r{}
   PRIX = %r{}
