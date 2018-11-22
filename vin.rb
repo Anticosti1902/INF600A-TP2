@@ -151,6 +151,10 @@ class Vin
   #
   def noter( note, commentaire )
     # A COMPLETER.
+    DBC.require( !bu?, "Vin bu: Le commentaire ou la note ne peut plus etre change" )
+
+    @note = note
+    @commentaire = commentaire
   end
 
   #
@@ -175,10 +179,12 @@ class Vin
   # le format approprie: date_achat.strftime("%d/%m/%y"),
   #
   def to_s( le_format = nil )
-    # BIDON: A MODIFIER/COMPLETER.
-    format( "%s => %s", numero, nom )
+    if @note != nil
+      format( "%i [%s - %.2f$]: %s %i, %s (%s) => %i {%s}", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @note , @commentaire || '')
+    else
+      format( "%i [%s - %.2f$]: %s %i, %s (%s) => {%s}", @numero, @type , @prix, @appellation, @millesime, @nom, @date_achat.strftime("%d/%m/%y"), @commentaire || '')
+    end
   end
-
 
   #
   # Ordonne les vins selon le numero.
